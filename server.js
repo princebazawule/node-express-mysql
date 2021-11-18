@@ -1,11 +1,14 @@
 const express = require('express')
 const cors = require("cors")
-require('dotenv').config()
+const morgan = require('morgan')
 
 const connection = require('./app/models/db')
 
 // create express app
 const app = express()
+
+// logging
+app.use(morgan("dev"))
 
 const corsOptions = {
     origin: "http://localhost:8081"
