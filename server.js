@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require("cors")
 const morgan = require('morgan')
+require('dotenv').config()
 
 const connection = require('./app/models/db')
 
@@ -10,14 +11,14 @@ const app = express()
 // logging
 app.use(morgan("dev"))
 
+// use cors
 const corsOptions = {
     origin: "http://localhost:8081"
 }
+app.use(cors(corsOptions))
 
 // set port
 const PORT = process.env.PORT || 3000
-
-app.use(cors(corsOptions));
 
 // parse requests content-type: application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }))
@@ -26,7 +27,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 // routes
-require("./app/routes/customer.routes.js")(app);
+require("./app/routes/customer.routes.js")(app)
 
 // initial route
 app.get('/', (req, res) => {
