@@ -39,8 +39,15 @@ Customer.findById = (customerId, result) => {
   })
 }
 
-Customer.getAll = result => {
-  sql.query("SELECT * FROM customers", (err, res) => {
+Customer.getAll = (offset, limit, email, result) => {
+
+  // let search_email = "%".concat(email.concat("%"));
+  // console.log(search_email)
+  // console.log(`SELECT * FROM customers WHERE 'email' LIKE ${search_email} LIMIT ${limit}, ${offset}`)
+  // sql.query("SELECT * FROM customers", (err, res) => {
+
+
+  sql.query(`SELECT * FROM customers LIMIT ${limit}, ${offset}`, (err, res) => {
     if (err) {
       console.log("error: ", err)
       result(null, err)

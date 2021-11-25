@@ -1,5 +1,12 @@
 const Customer = require("../models/customer.model.js")
 
+const getPagination = (page, size) => {
+    const limit = page ? +page : 100
+    const offset = size ? size * limit : 0
+  
+    return { limit, offset }
+  }
+
 // Create and Save a new Customer
 exports.create = (req, res) => {
     // Validate request
@@ -12,7 +19,7 @@ exports.create = (req, res) => {
     // Create a Customer
     const customer = new Customer({
         email: req.body.email,
-        name: req.body.name,
+        email: req.body.email,
         active: req.body.active
     })
 
@@ -29,7 +36,11 @@ exports.create = (req, res) => {
 
 // Retrieve all Customers from the database.
 exports.findAll = (req, res) => {
-    Customer.getAll((err, data) => {
+
+    const { page, size, email } = req.query
+    const { limit, offset } = getPagination(size, page)
+
+    Customer.getAll(limit, offset, email, (err, data) => {
         if (err)
             res.status(500).send({
                 message:
