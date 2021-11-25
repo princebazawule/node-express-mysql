@@ -37,10 +37,10 @@ exports.create = (req, res) => {
 // Retrieve all Customers from the database.
 exports.findAll = (req, res) => {
 
-    const { page, size, email } = req.query
+    const { page, size, email, _order } = req.query
     const { limit, offset } = getPagination(size, page)
 
-    Customer.getAll(limit, offset, email, (err, data) => {
+    Customer.getAll(limit, offset, email, _order, (err, data) => {
         if (err)
             res.status(500).send({
                 message:
